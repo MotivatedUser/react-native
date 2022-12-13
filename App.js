@@ -1,10 +1,15 @@
 import Main from './screens/MainComponent';
 import {NavigationContainer} from '@react-navigation/native';
+import { Provider } from 'react-redux';
+import {store} from './redux/store';
+
 
 const App = () => {
     return (
         <NavigationContainer>
-            <Main />
+            <Provider store={store}>
+                <Main />
+            </Provider>
         </NavigationContainer>
     )
 }
