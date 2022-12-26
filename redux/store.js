@@ -8,7 +8,7 @@ import { persistStore, persistCombineReducers, FLUSH, REHYDRATE, PAUSE, PERSIST,
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const config = {
-    key: 'root',
+    key: "root",
     storage: AsyncStorage,
     debug: true
 }
