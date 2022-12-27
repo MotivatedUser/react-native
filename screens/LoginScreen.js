@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, Button, StyleSheet } from "react-native";
-import { CheckBox, Input } from "react-native-elements";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { CheckBox, Input, Button, Icon } from "react-native-elements";
 import * as SecureStore from 'expo-secure-store';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-const LoginScreen = () => {
+const LoginTab = ({ navigation }) => {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [remember, setRemember] = useState(false);
@@ -65,18 +66,92 @@ const LoginScreen = () => {
                     onPress={() => setRemember(!remember)}
                     containerStyle={styles.formCheckbox}
                 />
-                <View style={styles.formButton}>
+                <ScrollView style={styles.formButton}>
                     <Button
                         onPress={() => handleLogin()}
                         title='Login'
                         color='#5637dd'
+                        buttonStyle={{ backgroundColor: '#5637dd' }}
+                        icon={
+                            <Icon
+                                name='sign-in'
+                                type='font-awesome'
+                                color='#fff'
+                                iconStyle={{ marginRight: 10 }}
+                            />
+                        }
                     />
-                </View>
+                </ScrollView>
+                <ScrollView style={styles.formButton}>
+                    <Button
+                        onPress={() => navigation.navigate('Register')}
+                        title='Register'
+                        type='clear'
+                        titleStyle={{ color: 'blue' }}
+                        icon={
+                            <Icon
+                                name='user-plus'
+                                type='font-awesome'
+                                color='blue'
+                                iconStyle={{ marginRight: 10 }}
+                            />
+                        }
+                    />
+                </ScrollView>
             </View>
             
         )
    
 };
+
+const RegisterTab = () => {
+    return <ScrollView></ScrollView>
+};
+
+const Tab = createBottomTabNavigator();
+const LoginScreen = () => {
+    const tabBarOptions = {
+        activeBackgroundColor: '#5637DD',
+    inactiveBackgroundColor: '#CEC8FF',
+    activeTintColor: '#fff',
+    inactiveTintColor: '#808080',
+    labelStyle: { fontSize: 16 }
+    }
+    return (
+        <Tab.Navigator tabBarOptions={tabBarOptions}>
+            <Tab.Screen
+                name='Login'
+                component={LoginTab}
+                options={{
+                    tabBarIcon: (props) => {
+                        return (
+                            <Icon   
+                                name='sign-in'
+                                type='font-awesome'
+                                color={props.color}
+                            />
+                        );
+                    }
+                }}
+            />
+            <Tab.Screen
+                name='Register'
+                component={RegisterTab}
+                options={{
+                    tabBarIcon: (props) => {
+                        return (
+                            <Icon   
+                                name='user-plus'
+                                type='font-awesome'
+                                color={props.color}
+                            />
+                        );
+                    }
+                }}
+            />
+        </Tab.Navigator>
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
