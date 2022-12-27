@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = [];
+
 const favoritesSlice = createSlice({
     name: 'favorites',
-    initialState: [],
+    initialState,
     reducers: {
         toggleFavorite: (favorites, action) => {
             if(favorites.includes(action.payload)) {
