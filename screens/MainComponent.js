@@ -228,26 +228,32 @@ const Main = () => {
         dispatch(fetchComments());
     }, [dispatch]);
 
-    useEffect(() => {
-        NetInfo.fetch().then((connectionInfo) => {
-            Platform.OS === 'IOS'
+    const showNetInfo = async () => {
+        const netInfo = await NetInfo.fetch()
+            Platform.OS === 'ios'
                 ? Alert.alert(
                     'Initial Network Connectivity Type:',
-                    connectionInfo.type
+                    netInfo.type
                 )
                 : ToastAndroid.show(
                     'Initial Network Connectivity Type: ' +
-                        connectionInfo.type,
+                        netInfo.type,
                     ToastAndroid.LONG
                 );
-        });
+            
+        
+    }
+    
+    
+    useEffect(() => {
+       showNetInfo();
 
         const unsubscribeNetInfo = NetInfo.addEventListener(
             (connectionInfo) => {
                 handleConnectivityChange(connectionInfo)
             }
         )
-
+        
         return unsubscribeNetInfo;
     }, []);
 
